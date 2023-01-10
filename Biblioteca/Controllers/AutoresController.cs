@@ -4,6 +4,7 @@ using Biblioteca.Entidades;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 
 namespace Biblioteca.Controllers
 {
@@ -21,9 +22,9 @@ namespace Biblioteca.Controllers
         }
 
         [HttpGet]
-        public List<AutorDto> Listar()
+        public async Task<List<AutorDto>> Listar()
         {
-            var autores = context.Autores.ToList();
+            var autores = await context.Autores.ToListAsync();
 
             var autoresDto = mapper.Map<List<AutorDto>>(autores);
 
