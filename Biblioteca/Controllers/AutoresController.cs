@@ -22,13 +22,28 @@ namespace Biblioteca.Controllers
         }
 
         [HttpGet]
-        public async Task<List<AutorDto>> Listar()
+        public async Task<ActionResult<List<AutorDto>>> Listar()
         {
             var autores = await context.Autores.ToListAsync();
 
             var autoresDto = mapper.Map<List<AutorDto>>(autores);
 
             return autoresDto;
+        }
+
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<AutorDto>> ObtenerPorId(int id)
+        {
+            var autor = await context.Autores.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (autor == null)
+            {
+                return NotFound();
+            }
+
+            var autorDto = mapper.Map<AutorDto>(autor);
+
+            return autorDto;
         }
     }
 }
